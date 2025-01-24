@@ -1,0 +1,20 @@
+# editor or IDE files
+.idea/
+*.sublime-project
+*.sublime-workspace
+.vscode/
+*.code-workspace
+
+# operating sistem specific ones
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# security...
+keys/
+secrets/
+*.key
+*.pem
+*.crt
+*.log
+*.env
