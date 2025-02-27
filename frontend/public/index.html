@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Chat | Bench AI</title>
+</head>
+<body>
+    <div id="chat-container">
+        <input type="text" id="user-input" placeholder="Enter your message..." />
+        <button onclick="sendMessage()">Send</button>
+        <div id="chat-output"></div>
+    </div>
+
+    <script>
+    async function sendMessage() {
+        const inputField = document.getElementById('user-input');
+        const message = inputField.value;
+        const response = await fetch('http://localhost:8000/chat', { // localhost here
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ message })
+        });
+        const data = await response.json();
+        document.getElementById('chat-output').innerText = data.reply;
+    }
+    </script>
+</body>
+</html>
