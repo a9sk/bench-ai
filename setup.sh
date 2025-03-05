@@ -18,7 +18,7 @@ source venv/bin/activate
 # install and start backend
 echo -e "${GREEN}[+][+][+][+] installing uvicorn [+][+][+][+]${NC}"
 pip install --upgrade pip
-pip install fastapi uvicorn
+pip install fastapi uvicorn requests
 
 cd backend || exit
 
