@@ -3,7 +3,7 @@
 GREEN='\033[0;32m'
 NC='\033[0m'
 
-set -e  # we do not want any errors during setup
+#set -e  # we do not want any errors during setup
 
 # install dependencies
 echo -e "${GREEN}[+][+][+][+] installing dependencies [+][+][+][+]${NC}"
