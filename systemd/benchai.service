@@ -3,8 +3,8 @@ Description=BenchAI FastAPI Backend
 After=network.target
 
 [Service]
-User=ubuntu         # we want to keep things simple
-Group=ubuntu
+User=benchai         # we want to keep things simple
+Group=benchai
 WorkingDirectory=/home/ubuntu/backend
 ExecStart=/home/ubuntu/venv/bin/uvicorn app:app --host 127.0.0.1 --port 8000
 
