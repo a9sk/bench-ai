@@ -1,7 +1,7 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from services.lm_studio import call_lm_studio
-from .utils import logging
+from utils import logging
 
 app = FastAPI()
 
