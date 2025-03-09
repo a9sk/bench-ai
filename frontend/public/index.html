@@ -1,28 +1,158 @@
+
 <!DOCTYPE html>
-<html>
+<html lang="it">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chat | Bench AI</title>
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            background-color: #f0db4f;
+            overflow: hidden;
+        }
+
+        #chat-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: #fff5cc;
+            border: 1px solid #ffd700;
+            overflow: hidden;
+        }
+
+        #chat-output {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            background-color: #fff8c6;
+        }
+
+        .message {
+            padding: 10px;
+            margin: 5px;
+            border-radius: 8px;
+            max-width: 75%;
+            font-size: 14px;
+            word-wrap: break-word;
+        }
+
+        .user {
+            background-color: #ffcc00;
+            color: white;
+            align-self: flex-end;
+        }
+
+        .bot {
+            background-color: #ffeb80;
+            align-self: flex-start;
+            color: black;
+        }
+
+        #input-container {
+            display: flex;
+            align-items: center;
+            border-top: 1px solid #ffd700;
+            padding: 10px;
+            background: #fff5cc;
+            width: 100%;
+            box-sizing: border-box; /* Assicura che l'input non superi la larghezza */
+        }
+
+        #user-input {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            outline: none;
+            background: #fff;
+            font-size: 16px;
+        }
+
+        #user-input:focus {
+            outline: 2px solid #ffd700;
+        }
+
+        button {
+            padding: 10px;
+            background-color: #ffcc00;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-left: 5px;
+        }
+
+        button:hover {
+            background-color: #e6b800;
+        }
+
+        #disclaimer {
+            font-size: 12px;
+            color: #555;
+            text-align: center;
+            padding: 5px;
+            background: #fff5cc;
+        }
+    </style>
 </head>
 <body>
     <div id="chat-container">
-        <input type="text" id="user-input" placeholder="Enter your message..." />
-        <button onclick="sendMessage()">Send</button>
         <div id="chat-output"></div>
+        <div id="input-container">
+            <input type="text" id="user-input" placeholder="Scrivi un messaggio..." onkeypress="handleKeyPress(event)" />
+            <button onclick="sendMessage()">➤</button>
+        </div>
+        <p id="disclaimer">Bench AI potrebbe generare risposte inesatte o inappropriate. Verifica sempre le informazioni importanti.</p>
     </div>
 
     <script>
-    async function sendMessage() {
-        const inputField = document.getElementById('user-input');
-        const message = inputField.value;
-        const response = await fetch('http://localhost:8000/chat', { // localhost here
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ message })
-        });
-        const data = await response.json();
-        document.getElementById('chat-output').innerText = data.reply;
-    }
+        async function sendMessage() {
+            const inputField = document.getElementById('user-input');
+            const message = inputField.value.trim();
+            if (message === "") return;
+
+            displayMessage(message, 'user');
+            inputField.value = "";
+
+            try {
+                const response = await fetch('http://localhost:8000/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message })
+                });
+                const data = await response.json();
+                displayMessage(data.reply, 'bot');
+            } catch (error) {
+                displayMessage("Errore di connessione", 'bot');
+            }
+        }
+
+        function displayMessage(text, sender) {
+            const chatOutput = document.getElementById('chat-output');
+            const messageDiv = document.createElement('div');
+            messageDiv.classList.add('message', sender);
+            messageDiv.innerText = text;
+            chatOutput.appendChild(messageDiv);
+            chatOutput.scrollTop = chatOutput.scrollHeight;
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === "Enter") {
+                sendMessage();
+            }
+        }
     </script>
 </body>
 </html>
