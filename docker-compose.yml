@@ -1,0 +1,32 @@
+version: '3.8'
+
+# LABEL maintainer="Emiliano Rizzonelli <emiliano.rizzonelli@proton.me>"
+# LABEL version="1.0"
+
+services:
+  backend:
+    build: ./backend
+    container_name: benchai-backend
+    restart: always
+    ports:
+      - "8000:8000"
+    networks:
+      - benchai-net
+
+  nginx:
+    build:
+      context: .
+      dockerfile: nginx/Dockerfile
+    container_name: benchai-nginx
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - backend
+    networks:
+      - benchai-net
+
+networks:
+  benchai-net:
+    driver: bridge
