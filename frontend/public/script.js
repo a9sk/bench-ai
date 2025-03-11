@@ -13,7 +13,12 @@ async function sendMessage() {
             body: JSON.stringify({ message })
         });
         const data = await response.json();
-        displayMessage(data.reply, 'bot');
+        // console.log("uauau<");
+        // console.log(data);
+
+        displayMessage(data.reply.reasoning, 'reasoning');
+        displayMessage(data.reply.reply, 'bot');
+
     } catch (error) {
         displayMessage("Errore di connessione", 'bot');
     }
@@ -24,6 +29,9 @@ function displayMessage(text, sender) {
     const messageDiv = document.createElement('div');
     messageDiv.classList.add('message', sender);
     messageDiv.innerText = text;
+    if (sender === 'reasoning') {
+        messageDiv.classList.add('reasoning');
+    }
     chatOutput.appendChild(messageDiv);
     chatOutput.scrollTop = chatOutput.scrollHeight;
 }

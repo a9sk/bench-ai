@@ -64,3 +64,14 @@ body {
     margin-top: 8px;
     text-align: center;
 }
+
+.reasoning {
+    font-style: italic;
+    background-color: #333;
+    color: #e0e0e0;
+    padding: 10px 14px;
+    border-radius: 12px;
+    border-left: 4px solid #888;
+    word-wrap: break-word;
+    margin-bottom: 10px;
+}
