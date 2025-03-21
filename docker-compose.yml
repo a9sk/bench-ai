@@ -12,6 +12,14 @@ services:
       - "8000:8000"
     networks:
       - benchai-net
+    depends_on:
+      - mysql
+    environment:
+      - DB_HOST=mysql
+      - DB_PORT=3306
+      - DB_NAME=benchai
+      - DB_USER=root
+      - DB_PASSWORD=root # obvious placeholder password
 
   nginx:
     build:
@@ -27,6 +35,25 @@ services:
     networks:
       - benchai-net
 
+  mysql:
+    image: mysql:8.0
+    container_name: benchai-mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root # obvious placeholder password
+      MYSQL_DATABASE: benchai
+      MYSQL_USER: root # obvious placeholder password
+      MYSQL_PASSWORD: root # obvious placeholder password
+    volumes:
+      - benchai-mysql-data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    networks:
+      - benchai-net
+
 networks:
   benchai-net:
     driver: bridge
+
+volumes:
+  benchai-mysql-data:

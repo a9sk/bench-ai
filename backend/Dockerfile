@@ -8,7 +8,7 @@ WORKDIR /app
 COPY . .
 
 RUN pip install --upgrade pip
-RUN pip install fastapi uvicorn requests
+RUN pip install fastapi uvicorn requests mysql-connector-python
 
 EXPOSE 8000
 
