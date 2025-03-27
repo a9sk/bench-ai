@@ -1,8 +1,5 @@
 version: '3.8'
 
-# LABEL maintainer="Emiliano Rizzonelli <emiliano.rizzonelli@proton.me>"
-# LABEL version="1.0"
-
 services:
   backend:
     build: ./backend
@@ -14,12 +11,14 @@ services:
       - benchai-net
     depends_on:
       - mysql
+      - lmstudio
     environment:
       - DB_HOST=mysql
       - DB_PORT=3306
       - DB_NAME=benchai
       - DB_USER=root
-      - DB_PASSWORD=root # obvious placeholder password
+      - DB_PASSWORD=root
+      - OLLAMA_URL=http://lmstudio:11434
 
   nginx:
     build:
@@ -40,16 +39,27 @@ services:
     container_name: benchai-mysql
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: root # obvious placeholder password
+      MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: benchai
-      MYSQL_USER: root # obvious placeholder password
-      MYSQL_PASSWORD: root # obvious placeholder password
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
     volumes:
       - benchai-mysql-data:/var/lib/mysql
     ports:
       - "3306:3306"
     networks:
       - benchai-net
+
+  lmstudio:
+    image: ollama/ollama
+    container_name: benchai-llm
+    restart: always
+    ports:
+      - "11434:11434"
+    networks:
+      - benchai-net
+    volumes:
+      - ./ollama_data:/root/.ollama
 
 networks:
   benchai-net:
