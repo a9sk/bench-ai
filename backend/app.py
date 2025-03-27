@@ -1,6 +1,6 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
-from services.lm_studio import call_lm_studio
+from services.ollama import call_ollama
 from utils import logging
 
 app = FastAPI()
@@ -23,7 +23,7 @@ async def chat_endpoint(chat: ChatRequest):
         logging.log_error("message cannot be empty.")
         raise HTTPException(status_code=400, detail="Message cannot be empty.")
     
-    reply = call_lm_studio(chat.message)
+    reply = call_ollama(chat.message)
     # we need to ensure 'reply' is a valid dictionary [object Object] error in js...
     if isinstance(reply, dict) and 'reasoning' in reply and 'reply' in reply:
         chat_reply = ChatReply(reasoning=reply['reasoning'], reply=reply['reply'])

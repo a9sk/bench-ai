@@ -5,3 +5,6 @@
 # (and you are running the backend in docker)
 # TODO: change this based on the type of deployment
 LM_STUDIO_URL = "http://host.docker.internal:1234/v1/chat/completions"
+
+
+OLLAMA_URL = "http://lmstudio:11434"
