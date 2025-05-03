@@ -19,7 +19,7 @@ services:
       - DB_PORT=3306
       - DB_NAME=benchai
       - DB_USER=root
-      - DB_PASSWORD=root # obvious placeholder password
+      - DB_PASSWORD=root
 
   nginx:
     build:
@@ -40,10 +40,8 @@ services:
     container_name: benchai-mysql
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: root # obvious placeholder password
+      MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: benchai
-      MYSQL_USER: root # obvious placeholder password
-      MYSQL_PASSWORD: root # obvious placeholder password
     volumes:
       - benchai-mysql-data:/var/lib/mysql
     ports:
