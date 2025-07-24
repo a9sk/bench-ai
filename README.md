@@ -1,6 +1,11 @@
 # Bench AI
 
-Official repository for Bench AI, an empathetic AI companion designed to provide emotional support and companionship to everybody.
+> **Note:** This is an old high school group project.  
+> It is no longer maintained and is archived for reference purposes only.
+
+![Status: Archived](https://img.shields.io/badge/status-archived-red)
+
+Infrastructure repository for Bench AI, an empathetic AI companion designed to provide emotional support and companionship to everybody.
 
 ## License
 
